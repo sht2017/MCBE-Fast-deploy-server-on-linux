@@ -60,6 +60,9 @@ sudo apt-get install wget -y && wget -O install.sh https://raw.githubusercontent
 - [ ] 自动备份及删除选定的过期备份
 - [ ] **远程通过客户端管理**（可能会新建一个移动管理客户端的项目）
 #### 更新日志(从2019/3/9开始记录)  *注：所有带有Update的更新均为功能性更新*
+2019/3/12 16:31
+* Fixed 1 bug (install.sh)
+
 2019/3/12 16:20 **Update**
 * Fixed 6 bugs (install.sh & mcbes-tool.sh)
 * 完成了简易地修改配置文件的主体框架 (mcbes-tool.sh)
