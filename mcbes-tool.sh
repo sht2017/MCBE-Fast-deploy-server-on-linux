@@ -468,7 +468,20 @@ CommandsHelp(){
     clear
     case $(find ~/ -maxdepth 1 -name ".help.list") in
         "")
-            wget -O .help.list -P ~  https://raw.githubusercontent.com/sht2017/MCBE-Fast-deploy-server-on-linux/master/help.list && CommandsHelp
+            wget -O .help.list -P ~  https://raw.githubusercontent.com/sht2017/MCBE-Fast-deploy-server-on-linux/master/help.list
+            sleep 10
+            CommandsHelp
+            for ((i=1; i<=10; i ++))
+            do
+                case $(find ~/ -maxdepth 1 -name ".help.list") in
+                    "")
+            	        sleep 1
+                        ;;
+                    *)
+                        CommandsHelp
+                        ;;
+                esac
+            done
             ;;
         *)
             cat ~/.help.list
