@@ -30,7 +30,7 @@ README
 ## 如何使用
 输入以下命令并回车即可
 ```Shell
-sudo apt-get install wget -y && wget -O install.sh https://raw.githubusercontent.com/sht2017/MCBE-Fast-deploy-server-on-linux/master/install.sh && sudo bash install.sh
+wget -O install.sh https://raw.githubusercontent.com/sht2017/MCBE-Fast-deploy-server-on-linux/master/install.sh && sudo bash install.sh
 ```
 不建议直接 sudo bash install.sh
 
