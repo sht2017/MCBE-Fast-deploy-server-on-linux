@@ -1,4 +1,4 @@
-#作者John Stonty
+#作者Stonty
 #禁止将该项目用于商业用途！！！
 #该项目使用GPL-3.0开源协议
 
@@ -12,7 +12,7 @@ SetPath(){
     read
     clear
     Path="$REPLY"
-    
+
     echo "您输入的路径是"${Path}
     echo "是否无误？"
     echo "1.是"
@@ -20,8 +20,7 @@ SetPath(){
     read -n1
     case $REPLY in
         1)
-            cd ${Path}
-            Menu
+            CheckServerIfExist
             ;;
         2)
             SetPath
@@ -33,6 +32,47 @@ SetPath(){
             SetPath
             ;;
     esac
+}
+
+CheckServerIfExist(){
+    case $(find $Path -maxdepth 1 -name "bedrock-server-*") in
+        "")
+            clear
+            echo -e ${Red_font_prefix}"您选择的路径下未部署服务器"${Font_color_suffix}
+            sleep 2
+            SetPath
+            ;;
+        *)
+            cd ${Path}
+            CheckServerConfigurationInfoIfExist
+            ;;
+    esac
+}
+
+CheckServerConfigurationInfoIfExist(){
+    case $(find . -maxdepth 1 -name ".Server.Configuration.Info") in
+        "")
+            echo $(echo "Info${PWD##*/}$(date +%Y%m%d%H%M%S%N)"|base64) > ./.Server.Configuration.Info
+            CheckServerConfigurationInfoIfExist
+            ;;
+        *)
+            ServerConfigurationInfo=$(echo `cat .Server.Configuration.Info`)
+            ServerInfo
+            ;;
+    esac
+}
+
+ServerInfo(){
+    clear
+    result=$(echo $(screen -list) | grep "${ServerConfigurationInfo}")
+    if [[ "$result" != "" ]]
+    then
+        ServerStatus=on
+        Menu
+    else
+        ServerStatus=off
+        Menu
+    fi
 }
 
 Menu(){
@@ -55,7 +95,7 @@ Menu(){
             SetServerOptions
             ;;
         4)
-            Commands
+            BeforeCommands
             ;;
         "")
             clear
@@ -73,36 +113,234 @@ Menu(){
 
 StartServer(){
     clear
-    result=$(echo $(screen -list) | grep "Be-server")
-    if [[ "$result" != "" ]]
-    then
-        echo "服务器当前已启动 请勿重复启动！"
-        sleep 3
-        Menu
-    else
-        screen -dmS Be-server
-        screen -r Be-server -p 0 -X stuff "LD_LIBRARY_PATH=. ./bedrock_server"
-        screen -r Be-server -p 0 -X stuff $'\n'
-        echo "已启动"
-        sleep 3
-        Menu
-    fi
+    case $ServerStatus in
+        on)
+            echo "服务器当前已启动 请勿重复启动！"
+            sleep 3
+            Menu
+            ;;
+        off)
+            screen -dmS ${ServerConfigurationInfo}
+            screen -r ${ServerConfigurationInfo} -p 0 -X stuff "LD_LIBRARY_PATH=. ./bedrock_server"
+            screen -r ${ServerConfigurationInfo} -p 0 -X stuff $'\n'
+            ServerStatus=on
+            echo "已启动"
+            sleep 3
+            Menu
+            ;;
+    esac
 }
 
 StopServer(){
     clear
-    screen -r Be-server -p 0 -X stuff "stop"
-    screen -r Be-server -p 0 -X stuff $'\n'
-    sleep 1
-    screen -S Be-server -X quit
-    echo "已停止"
-    sleep 3
-    Menu
+    case $ServerStatus in
+        on)
+            screen -r ${ServerConfigurationInfo} -p 0 -X stuff "stop"
+            screen -r ${ServerConfigurationInfo} -p 0 -X stuff $'\n'
+            sleep 1
+            screen -S ${ServerConfigurationInfo} -X quit
+            ServerStatus=off
+            echo "已停止"
+            sleep 3
+            Menu
+            ;;
+        off)
+            echo "服务器未启动！"
+            sleep 3
+            Menu
+            ;;
+    esac
 }
 
 SetServerOptions(){
     clear
+    case $ServerStatus in
+        on)
+            echo "请停止服务器后再修改服务器配置"
+            sleep 3
+            Menu
+            ;;
+        off)
+            SetServerOptionsPage1
+            ;;
+    esac
+}
+
+SetServerOptionsPage1(){
+    clear
+    echo -e ${Green_font_prefix}"服务器配置[第1页 共3页]"${Font_color_suffix}
+    echo "1.游戏模式"
+    echo "2.难度"
+    echo "3.地图类型"
+    echo "4.服务器名称（暂未开放）"
+    echo "5.最大玩家数（默认10人）"
+    echo "6.IPv4端口（默认19132）"
+    echo "7.IPv6端口（默认19133）"
+    echo "8.地图名称（暂未开放）"
+    echo "9.[下一页]"
+    echo "[回车退出]"
+    echo -e ${Green_font_prefix}"服务器配置[第1页 共3页]"${Font_color_suffix}
+    read -n1
+    case $REPLY in
+        1)
+            gamemode
+            ;;
+        2)
+            ;;
+        3)
+            ;;
+        4)
+            SetServerOptionsPage1NotAllowed
+            ;;
+        5)
+            SetServerOptionsPage1NotAllowed
+            ;;
+        6)
+            SetServerOptionsPage1NotAllowed
+            ;;
+        7)
+            SetServerOptionsPage1NotAllowed
+            ;;
+        8)
+            SetServerOptionsPage1NotAllowed
+            ;;
+        9)
+            SetServerOptionsPage2
+            ;;
+        "")
+            Menu
+            ;;
+        *)
+            clear
+            echo -e ${Red_font_prefix}"选择有误"${Font_color_suffix}
+            sleep 2
+            SetServerOptionsPage1
+            ;;
+    esac
     exit
+}
+
+SetServerOptionsPage1NotAllowed(){
+            clear
+            echo "暂未开放！！！"
+            sleep 3
+            SetServerOptionsPage1
+}
+
+SetServerOptionsPage2(){
+    clear
+    echo -e ${Green_font_prefix}"服务器配置[第2页 共3页]"${Font_color_suffix}
+    echo "1.[上一页]"
+    echo "2.地图种子（暂未开放）"
+    echo "3.Xbox身份验证"
+    echo "4.白名单模式（暂未开放）"
+    echo "5.允许作弊"
+    echo "6.最大可见距离（暂未开放）"
+    echo "7.允许最长挂机时间（暂未开放）"
+    echo "8.最大线程（暂未开放）"
+    echo "9.[下一页]"
+    echo "[回车退出]"
+    echo -e ${Green_font_prefix}"服务器配置[第2页 共3页]"${Font_color_suffix}
+    read -n1
+    case $REPLY in
+        1)
+            SetServerOptionsPage1
+            ;;
+        2)
+            SetServerOptionsPage2NotAllowed
+            ;;
+        3)
+            ;;
+        4)
+            SetServerOptionsPage2NotAllowed
+            ;;
+        5)
+            ;;
+        6)
+            SetServerOptionsPage2NotAllowed
+            ;;
+        7)
+            SetServerOptionsPage2NotAllowed
+            ;;
+        8)
+            SetServerOptionsPage2NotAllowed
+            ;;
+        9)
+            SetServerOptionsPage3
+            ;;
+        "")
+            Menu
+            ;;
+        *)
+            clear
+            echo -e ${Red_font_prefix}"选择有误"${Font_color_suffix}
+            sleep 2
+            SetServerOptionsPage2
+            ;;
+    esac
+    exit
+}
+
+SetServerOptionsPage2NotAllowed(){
+            clear
+            echo "暂未开放！！！"
+            sleep 3
+            SetServerOptionsPage2
+}
+
+SetServerOptionsPage3(){
+    clear
+    echo -e ${Green_font_prefix}"服务器配置[第3页 共3页]"${Font_color_suffix}
+    echo "1.[上一页]"
+    echo "2.区块加载距离（暂未开放）"
+    echo "3.新玩家权限"
+    echo "4.强制载入资源包"
+    echo "[回车退出]"
+    echo -e ${Green_font_prefix}"服务器配置[第3页 共3页]"${Font_color_suffix}
+    read -n1
+    case $REPLY in
+        1)
+            SetServerOptionsPage2
+            ;;
+        2)
+            SetServerOptionsPage3NotAllowed
+            ;;
+        3)
+            ;;
+        4)
+            ;;
+        "")
+            Menu
+            ;;
+        *)
+            clear
+            echo -e ${Red_font_prefix}"选择有误"${Font_color_suffix}
+            sleep 2
+            SetServerOptionsPage3
+            ;;
+    esac
+    exit
+}
+
+SetServerOptionsPage3NotAllowed(){
+            clear
+            echo "暂未开放！！！"
+            sleep 3
+            SetServerOptionsPage3
+}
+
+BeforeCommands(){
+    clear
+    case $ServerStatus in
+        on)
+            Commands
+            ;;
+        off)
+            echo "请启动服务器后再发送指令"
+            sleep 3
+            Menu
+            ;;
+    esac
 }
 
 Commands(){
@@ -226,13 +464,19 @@ AfterCommandsCustomInputed(){
 
 CommandsHelp(){
     clear
-    wget -O .help.list -P ~  https://raw.githubusercontent.com/sht2017/MCBE-Fast-deploy-server-on-linux/master/help.list >/dev/null 2>&1
-    cat ~/.help.list
-    echo "[任意键返回上级菜单]"
-    read
-    case $REPLY in
+    case $(find ~/ -maxdepth 1 -name ".help.list") in
+        "")
+            wget -O .help.list -P ~  https://raw.githubusercontent.com/sht2017/MCBE-Fast-deploy-server-on-linux/master/help.list && CommandsHelp
+            ;;
         *)
-            Commands
+            cat ~/.help.list
+            echo "[任意键返回上级菜单]"
+            read
+            case $REPLY in
+                *)
+                    Commands
+                    ;;
+            esac
             ;;
     esac
 }
