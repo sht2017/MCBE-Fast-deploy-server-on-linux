@@ -47,20 +47,30 @@ sudo apt-get install wget -y && wget -O install.sh https://raw.githubusercontent
 - [x] 停止 ~~（需自行stop）~~
 - [x] 方便的指令使用功能（部分）
 - [x] 自动更新脚本
+- [x] 简易地修改配置文件(框架)
+- [x] 检查选定目录是否存在服务器
+- [x] 同时运行多服务器
 #### 未完成
 目前该项目提供的解决方案暂时无法做到以下这些
-- [ ] 检查选定目录是否存在服务器
 - [ ] 简易地修改配置文件
 - [ ] 方便的指令使用功能
 - [ ] 自动更新服务端
-- [ ] 同时运行多服务器
 - [ ] 获得指令执行反馈
 - [ ] 自动获取本地安装地址
 - [ ] 自动备份及删除选定的过期备份
 - [ ] **远程通过客户端管理**（可能会新建一个移动管理客户端的项目）
 #### 更新日志(从2019/3/9开始记录)  *注：所有带有Update的更新均为功能性更新*
+2019/3/12 16:20 **Update**
+* Fixed 6 bugs (install.sh & mcbes-tool.sh)
+* 完成了简易地修改配置文件的主体框架 (mcbes-tool.sh)
+* 更新了管理脚本会自动检查选定目录是否存在服务器 (mcbes-tool.sh)
+* 本次更新允许同时运行多个服务器并管理 (mcbes-tool.sh)
+* 更新了查看指令帮助的部分代码 (mcbes-tool.sh)
+* 增加了对管理脚本部分限制，避免因用户行为不当导致bug (mcbes-tool.sh)
+* 优化部分代码 (install.sh & mcbes-tool.sh)
+
 2019/3/11 22:56
-* Fixed 1 bug （由@ChargeCrystal反馈）
+* Fixed 1 bug (install.sh) (由@ChargeCrystal反馈)
 
 2019/3/11 20:03 **Update**
 * 更新了自动更新脚本的功能 (install.sh)
