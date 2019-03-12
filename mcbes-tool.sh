@@ -170,8 +170,8 @@ SetServerOptionsPage1(){
     clear
     echo -e ${Green_font_prefix}"服务器配置[第1页 共3页]"${Font_color_suffix}
     echo "1.游戏模式"
-    echo "2.难度"
-    echo "3.地图类型"
+    echo "2.游戏难度"
+    echo "3.新玩家权限"
     echo "4.服务器名称（暂未开放）"
     echo "5.最大玩家数（默认10人）"
     echo "6.IPv4端口（默认19132）"
@@ -183,11 +183,13 @@ SetServerOptionsPage1(){
     read -n1
     case $REPLY in
         1)
-            gamemode
+            Gamemode
             ;;
         2)
+            Difficulty
             ;;
         3)
+            DefaultPlayerPermissionLevel
             ;;
         4)
             SetServerOptionsPage1NotAllowed
@@ -250,11 +252,13 @@ SetServerOptionsPage2(){
             SetServerOptionsPage2NotAllowed
             ;;
         3)
+            OnlineMode
             ;;
         4)
             SetServerOptionsPage2NotAllowed
             ;;
         5)
+            AllowCheats
             ;;
         6)
             SetServerOptionsPage2NotAllowed
@@ -293,8 +297,7 @@ SetServerOptionsPage3(){
     echo -e ${Green_font_prefix}"服务器配置[第3页 共3页]"${Font_color_suffix}
     echo "1.[上一页]"
     echo "2.区块加载距离（暂未开放）"
-    echo "3.新玩家权限"
-    echo "4.强制载入资源包"
+    echo "3.强制载入资源包（暂未开放）"
     echo "[回车退出]"
     echo -e ${Green_font_prefix}"服务器配置[第3页 共3页]"${Font_color_suffix}
     read -n1
@@ -306,8 +309,7 @@ SetServerOptionsPage3(){
             SetServerOptionsPage3NotAllowed
             ;;
         3)
-            ;;
-        4)
+            SetServerOptionsPage3NotAllowed
             ;;
         "")
             Menu
@@ -481,5 +483,202 @@ CommandsHelp(){
     esac
 }
 
-SetPath
+#已通过unit-test 请勿更改
+AllowCheats(){
+    clear
+    echo -e ${Green_font_prefix}"请选择是否开启作弊"${Font_color_suffix}
+    echo "1.开启"
+    echo "2.关闭"
+    echo "[回车退出]"
+    read -n1
+    case $REPLY in
+        1)
+            grep -n "allow-cheats=" ./server.properties > ./server.properties.tmp
+            sed -i "$(cut -f1 -d":" ./server.properties.tmp)c allow-cheats=true" ./server.properties
+            rm -rf ./server.properties.tmp
+            SetServerOptionsPage2
+            ;;
+        2)
+            grep -n "allow-cheats=" ./server.properties > ./server.properties.tmp
+            sed -i "$(cut -f1 -d":" ./server.properties.tmp)c allow-cheats=false" ./server.properties
+            rm -rf ./server.properties.tmp
+            SetServerOptionsPage2
+            ;;
+        "")
+            clear
+            SetServerOptionsPage2
+            ;;
+        *)
+            clear
+            echo -e ${Red_font_prefix}"选择有误"${Font_color_suffix}
+            sleep 2
+            AllowCheats
+            ;;
+    esac
+}
 
+#已通过unit-test 请勿更改
+DefaultPlayerPermissionLevel(){
+    clear
+    echo -e ${Green_font_prefix}"请选择新玩家权限"${Font_color_suffix}
+    echo "1.访客"
+    echo "2.成员"
+    echo "3.管理员"
+    echo "[回车退出]"
+    read -n1
+    case $REPLY in
+        1)
+            grep -n "default-player-permission-level=" ./server.properties > ./server.properties.tmp
+            sed -i "$(cut -f1 -d":" ./server.properties.tmp)c default-player-permission-level=visitor" ./server.properties
+            rm -rf ./server.properties.tmp
+            SetServerOptionsPage1
+            ;;
+        2)
+            grep -n "default-player-permission-level=" ./server.properties > ./server.properties.tmp
+            sed -i "$(cut -f1 -d":" ./server.properties.tmp)c default-player-permission-level=member" ./server.properties
+            rm -rf ./server.properties.tmp
+            SetServerOptionsPage1
+            ;;
+        3)
+            grep -n "default-player-permission-level=" ./server.properties > ./server.properties.tmp
+            sed -i "$(cut -f1 -d":" ./server.properties.tmp)c default-player-permission-level=operator" ./server.properties
+            rm -rf ./server.properties.tmp
+            SetServerOptionsPage1
+            ;;
+        "")
+            clear
+            SetServerOptionsPage1
+            ;;
+        *)
+            clear
+            echo -e ${Red_font_prefix}"选择有误"${Font_color_suffix}
+            sleep 2
+            DefaultPlayerPermissionLevel
+            ;;
+    esac
+}
+
+#已通过unit-test 请勿更改
+Difficulty(){
+    clear
+    echo -e ${Green_font_prefix}"请选择游戏难度"${Font_color_suffix}
+    echo "1.和平"
+    echo "2.简单"
+    echo "3.一般"
+    echo "4.困难"
+    echo "[回车退出]"
+    read -n1
+    case $REPLY in
+        1)
+            grep -n "difficulty=" ./server.properties > ./server.properties.tmp
+            sed -i "$(cut -f1 -d":" ./server.properties.tmp)c difficulty=peaceful" ./server.properties
+            rm -rf ./server.properties.tmp
+            SetServerOptionsPage1
+            ;;
+        2)
+            grep -n "difficulty=" ./server.properties > ./server.properties.tmp
+            sed -i "$(cut -f1 -d":" ./server.properties.tmp)c difficulty=easy" ./server.properties
+            rm -rf ./server.properties.tmp
+            SetServerOptionsPage1
+            ;;
+        3)
+            grep -n "difficulty=" ./server.properties > ./server.properties.tmp
+            sed -i "$(cut -f1 -d":" ./server.properties.tmp)c difficulty=normal" ./server.properties
+            rm -rf ./server.properties.tmp
+            SetServerOptionsPage1
+            ;;
+        4)
+            grep -n "difficulty=" ./server.properties > ./server.properties.tmp
+            sed -i "$(cut -f1 -d":" ./server.properties.tmp)c difficulty=hard" ./server.properties
+            rm -rf ./server.properties.tmp
+            SetServerOptionsPage1
+            ;;
+        "")
+            clear
+            SetServerOptionsPage1
+            ;;
+        *)
+            clear
+            echo -e ${Red_font_prefix}"选择有误"${Font_color_suffix}
+            sleep 2
+            Difficulty
+            ;;
+    esac
+}
+
+#已通过unit-test 请勿更改
+Gamemode(){
+    clear
+    echo -e ${Green_font_prefix}"请选择游戏模式"${Font_color_suffix}
+    echo "1.生存模式"
+    echo "2.创造模式"
+    echo "3.冒险模式"
+    echo "[回车退出]"
+    read -n1
+    case $REPLY in
+        1)
+            grep -n "gamemode=" ./server.properties > ./server.properties.tmp
+            sed -i "$(cut -f1 -d":" ./server.properties.tmp)c gamemode=survival" ./server.properties
+            rm -rf ./server.properties.tmp
+            SetServerOptionsPage1
+            ;;
+        2)
+            grep -n "gamemode=" ./server.properties > ./server.properties.tmp
+            sed -i "$(cut -f1 -d":" ./server.properties.tmp)c gamemode=creative" ./server.properties
+            rm -rf ./server.properties.tmp
+            SetServerOptionsPage1
+            ;;
+        3)
+            grep -n "gamemode=" ./server.properties > ./server.properties.tmp
+            sed -i "$(cut -f1 -d":" ./server.properties.tmp)c gamemode=adventure" ./server.properties
+            rm -rf ./server.properties.tmp
+            SetServerOptionsPage1
+            ;;
+        "")
+            clear
+            SetServerOptionsPage1
+            ;;
+        *)
+            clear
+            echo -e ${Red_font_prefix}"选择有误"${Font_color_suffix}
+            sleep 2
+            Gamemode
+            ;;
+    esac
+}
+
+#已通过unit-test 请勿更改
+OnlineMode(){
+    clear
+    echo -e ${Green_font_prefix}"请选择Xbox身份验证模式"${Font_color_suffix}
+    echo "1.开启"
+    echo "2.关闭"
+    echo "[回车退出]"
+    read -n1
+    case $REPLY in
+        1)
+            grep -n "online-mode=" ./server.properties > ./server.properties.tmp
+            sed -i "$(cut -f1 -d":" ./server.properties.tmp)c online-mode=true" ./server.properties
+            rm -rf ./server.properties.tmp
+            SetServerOptionsPage2
+            ;;
+        2)
+            grep -n "online-mode=" ./server.properties > ./server.properties.tmp
+            sed -i "$(cut -f1 -d":" ./server.properties.tmp)c online-mode=false" ./server.properties
+            rm -rf ./server.properties.tmp
+            SetServerOptionsPage2
+            ;;
+        "")
+            clear
+            SetServerOptionsPage2
+            ;;
+        *)
+            clear
+            echo -e ${Red_font_prefix}"选择有误"${Font_color_suffix}
+            sleep 2
+            OnlineMode
+            ;;
+    esac
+}
+
+SetPath
