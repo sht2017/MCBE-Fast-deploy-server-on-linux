@@ -49,6 +49,7 @@ sudo apt-get install wget -y && wget -O install.sh https://raw.githubusercontent
 - [x] 自动更新脚本
 #### 未完成
 目前该项目提供的解决方案暂时无法做到以下这些
+- [ ] 检查选定目录是否存在服务器
 - [ ] 简易地修改配置文件
 - [ ] 方便的指令使用功能
 - [ ] 自动更新服务端
