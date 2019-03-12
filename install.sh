@@ -1,4 +1,4 @@
-#作者John Stonty
+#作者Stonty
 #禁止将该项目用于商业用途！！！
 #该项目使用GPL-3.0开源协议
 
@@ -189,7 +189,7 @@ ChineseAutomatedReadyForDeploymentServer(){
     
     echo -e ${Green_font_prefix}"正在安装一些必要的包"${Font_color_suffix}
     sleep 1
-    apt-get install curl screen zip unzip -y
+    apt-get install curl screen zip unzip openssl -y
     echo -e ${Green_font_prefix}"安装完毕"${Font_color_suffix}
     sleep 2
     
