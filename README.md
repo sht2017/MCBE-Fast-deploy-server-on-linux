@@ -32,6 +32,10 @@ README
 ```Shell
 wget -O install.sh https://raw.githubusercontent.com/sht2017/MCBE-Fast-deploy-server-on-linux/master/install.sh && sudo bash install.sh
 ```
+若报错信息中含有wget字样 请输入以下命令并回车后再尝试前一个命令
+```Shell
+sudo apt-get install wget -y
+```
 不建议直接 sudo bash install.sh
 
 因为这样将会导致无法获得即时更新和bug修复
