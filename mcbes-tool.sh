@@ -525,8 +525,7 @@ ManualUpgradeServer(){
                     sleep 3
                     Menu
                     ;;
-            ;;
-    esac
+            esac
 }
 
 #已通过unit-test 请勿更改
