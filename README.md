@@ -66,6 +66,9 @@ sudo apt-get install wget -y
 - [ ] 自动备份及删除选定的过期备份
 - [ ] **远程通过客户端管理**（可能会新建一个移动管理客户端的项目）
 #### 更新日志(从2019/3/9开始记录)  *注：所有带有Update的更新均为功能性更新*
+2019/3/14 19:24
+* Fixed 1 bug (install.sh) (由 @呵呵 反馈)
+
 2019/3/14 19:13
 * Fixed 2 bugs (install.sh & mcbes-tool.sh)
 
@@ -114,7 +117,7 @@ sudo apt-get install wget -y
 * 优化部分代码 (install.sh & mcbes-tool.sh)
 
 2019/3/11 22:56
-* Fixed 1 bug (install.sh) (由@ChargeCrystal反馈)
+* Fixed 1 bug (install.sh) (由 @ChargeCrystal 反馈)
 
 2019/3/11 20:03 **Update**
 * 更新了自动更新脚本的功能 (install.sh)
