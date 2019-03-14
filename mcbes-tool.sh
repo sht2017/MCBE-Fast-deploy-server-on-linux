@@ -472,7 +472,9 @@ CommandsHelp(){
     clear
     case $(find ~/ -maxdepth 1 -name ".help.list") in
         "")
+            cd ~
             wget -O .help.list -P ~\  https://raw.githubusercontent.com/sht2017/MCBE-Fast-deploy-server-on-linux/master/help.list >/dev/null 2>&1
+            cd ${Path}
             echo "未检测到帮助文件，正在下载"
             sleep 3
             Commands
