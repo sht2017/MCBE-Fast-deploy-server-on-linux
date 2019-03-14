@@ -477,7 +477,7 @@ CommandsHelp(){
             cd ${Path}
             echo "未检测到帮助文件，正在下载"
             sleep 3
-            Commands
+            CommandsHelp
             ;;
         *)
             cat ~/.help.list
