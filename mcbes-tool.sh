@@ -512,7 +512,7 @@ ManualUpgradeServer(){
             echo ${Version} > ./Info.tmp
             sleep 5
 
-            case $(find . -maxdepth 1 -name ${Version}) in
+            case $(find . -maxdepth 1 -name *${Version}*) in
                 "")
                     echo "检测到更新"
                     echo "版本："${Version}
