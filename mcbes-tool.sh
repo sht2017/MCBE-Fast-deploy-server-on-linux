@@ -99,7 +99,7 @@ Menu(){
             BeforeCommands
             ;;
         5)
-            UpgradeServer
+            ManualUpgradeServer
             ;;
         "")
             clear
@@ -490,7 +490,7 @@ CommandsHelp(){
     esac
 }
 
-UpgradeServer(){
+ManualUpgradeServer(){
     clear
     case $ServerStatus in
         on)
@@ -516,9 +516,15 @@ UpgradeServer(){
                 "")
                     echo "检测到更新"
                     echo "版本："${Version}
+                    sleep 3
+                    Menu
+                    ;;
                 *)
                     echo "当前版本为最新版"
                     echo "版本："${Version}
+                    sleep 3
+                    Menu
+                    ;;
             ;;
     esac
 }
