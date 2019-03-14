@@ -526,6 +526,7 @@ ManualUpgradeServer(){
                     Menu
                     ;;
             esac
+            ;;
     esac
 }
 
