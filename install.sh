@@ -215,6 +215,7 @@ ChineseAutomatedStartDeploymentServer(){
 ChineseInstallManagementTools(){
     clear
     echo "开始安装/更新..."
+    cd ~
     wget -O mcbes-tool.sh -P ~/ https://raw.githubusercontent.com/sht2017/MCBE-Fast-deploy-server-on-linux/master/mcbes-tool.sh >/dev/null 2>&1
     chmod 777 ~/mcbes-tool.sh
     rm -rf /usr/local/bin/mcbes-tool*
@@ -229,7 +230,7 @@ ChineseSetManagementToolsAutoUpdate(){
     clear
     CrontabInfo=$(echo `cat /etc/crontab`)
     SerachInfo='mcbes-tool'
-    CrontabCommand='0 * * * * root wget -O mcbes-tool.sh -P ~/ https://raw.githubusercontent.com/sht2017/MCBE-Fast-deploy-server-on-linux/master/mcbes-tool.sh && chmod 777 ~/mcbes-tool.sh && mv -f ~/mcbes-tool.sh /usr/local/bin/mcbes-tool.sh'
+    CrontabCommand='0 * * * * root cd ~ && wget -O mcbes-tool.sh -P ~/ https://raw.githubusercontent.com/sht2017/MCBE-Fast-deploy-server-on-linux/master/mcbes-tool.sh && chmod 777 ~/mcbes-tool.sh && mv -f ~/mcbes-tool.sh /usr/local/bin/mcbes-tool.sh'
     ExistTest=$(echo "${CrontabInfo}" | grep "${SerachInfo}")
     case $ExistTest in
         "")
