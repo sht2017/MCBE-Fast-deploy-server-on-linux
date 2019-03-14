@@ -35,7 +35,7 @@ SetPath(){
 }
 
 CheckServerIfExist(){
-    case $(find $Path -maxdepth 1 -name "bedrock-server-*") in
+    case $(find $Path -maxdepth 1 -name "bedrock_server") in
         "")
             clear
             echo -e ${Red_font_prefix}"您选择的路径下未部署服务器"${Font_color_suffix}
@@ -82,6 +82,7 @@ Menu(){
     echo "2.停止服务器"
     echo "3.服务器配置"
     echo "4.服务器指令"
+    echo "5.更新服务器"
     echo "[回车退出]"
     read -n1
     case $REPLY in
@@ -96,6 +97,9 @@ Menu(){
             ;;
         4)
             BeforeCommands
+            ;;
+        5)
+            UpgradeServer
             ;;
         "")
             clear
@@ -468,20 +472,10 @@ CommandsHelp(){
     clear
     case $(find ~/ -maxdepth 1 -name ".help.list") in
         "")
-            wget -O .help.list -P ~  https://raw.githubusercontent.com/sht2017/MCBE-Fast-deploy-server-on-linux/master/help.list
-            sleep 10
-            CommandsHelp
-            for ((i=1; i<=10; i ++))
-            do
-                case $(find ~/ -maxdepth 1 -name ".help.list") in
-                    "")
-            	        sleep 1
-                        ;;
-                    *)
-                        CommandsHelp
-                        ;;
-                esac
-            done
+            wget -O .help.list -P ~  https://raw.githubusercontent.com/sht2017/MCBE-Fast-deploy-server-on-linux/master/help.list >/dev/null 2>&1
+            echo "未检测到帮助文件，正在下载"
+            sleep 3
+            Commands
             ;;
         *)
             cat ~/.help.list
@@ -492,6 +486,39 @@ CommandsHelp(){
                     Commands
                     ;;
             esac
+            ;;
+    esac
+}
+
+UpgradeServer(){
+    clear
+    case $ServerStatus in
+        on)
+            echo "请停止服务器后再检查服务器更新"
+            sleep 3
+            Menu
+            ;;
+        off)
+            echo -e ${Green_font_prefix}"正在从服务器上获取源地址及版本..."${Font_color_suffix}
+            wget -O Info.tmp https://www.minecraft.net/en-us/download/server/bedrock/ >/dev/null 2>&1
+    
+            echo -e ${Green_font_prefix}"获取基础类信息完毕！开始解析..."${Font_color_suffix}
+            grep -n "serverBedrockLinux" ./Info.tmp > ./Info.tmp1
+            echo $(sed -n "$(cut -f1 -d":" ./Info.tmp1)p" ./Info.tmp) > ./Info.tmp
+            Link=$(cut -f2 -d"\"" ./Info.tmp)
+            echo ${Link} > ./Info.tmp
+            echo $(cut -f4 -d"-" ./Info.tmp) > ./Info.tmp
+            Version=$(sed 's/.zip//g' ./Info.tmp)
+            echo ${Version} > ./Info.tmp
+            sleep 5
+
+            case $(find . -maxdepth 1 -name ${Version}) in
+                "")
+                    echo "检测到更新"
+                    echo "版本："${Version}
+                *)
+                    echo "当前版本为最新版"
+                    echo "版本："${Version}
             ;;
     esac
 }
