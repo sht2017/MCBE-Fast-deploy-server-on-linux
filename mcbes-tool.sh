@@ -519,6 +519,23 @@ ManualUpgradeServer(){
                     echo "检测到更新"
                     echo "版本："${Version}
                     sleep 3
+                    rm -rf UpdateBackup
+                    mkdir UpdateBackup
+                    cp ./server.properties ./UpdateBackup/server.properties
+                    cp ./whitelist.json ./UpdateBackup/whitelist.json
+                    cp ./permissions.json ./UpdateBackup/permissions.json
+                    echo -e ${Green_font_prefix}"开始升级"${Font_color_suffix}
+                    echo -e ${Green_font_prefix}"目标版本："${Version}${Font_color_suffix}
+                    sleep 1
+                    wget -O bedrock-server-${Version}.zip ${Link}
+                    unzip -o bedrock-server-${Version}.zip
+                    clear
+                    cp ./UpdateBackup/server.properties ./server.properties
+                    cp ./UpdateBackup/whitelist.json ./whitelist.json
+                    cp ./UpdateBackup/permissions.json ./permissions.json
+                    rm -rf UpdateBackup
+                    echo -e ${Green_font_prefix}"升级完毕"${Font_color_suffix}
+                    sleep 5
                     Menu
                     ;;
                 *)
