@@ -4,6 +4,8 @@ README
 ======
 该项目使用GPL-3.0开源协议
 
+该页面将会被移入wiki
+
 该项目基于[Mojang官方](https://minecraft.net)给出的[基岩版服务器端软件（早期测试版）](https://minecraft.net/download/server/bedrock/)故仅适用于Ubuntu 18.04+
 
 如果该脚本对您有帮助，希望能够通过Star的方式使该项目获得更多关注
@@ -58,7 +60,6 @@ sudo apt-get install wget -y
 - [x] 手动更新服务端
 #### 未完成
 目前该项目提供的解决方案暂时无法做到以下这些
-- [ ] 暂时不支持英语！！！
 - [ ] 简易地修改配置文件(部分)
 - [ ] 方便的指令使用功能(部分)
 - [ ] 自动更新服务端
