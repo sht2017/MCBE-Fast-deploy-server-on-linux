@@ -176,7 +176,7 @@ SetServerOptionsPage1(){
     echo "1.游戏模式"
     echo "2.游戏难度"
     echo "3.新玩家权限"
-    echo "4.服务器名称（暂未开放）"
+    echo "4.服务器名称"
     echo "5.最大玩家数（默认10人）"
     echo "6.IPv4端口（默认19132）"
     echo "7.IPv6端口（默认19133）"
@@ -196,7 +196,7 @@ SetServerOptionsPage1(){
             DefaultPlayerPermissionLevel
             ;;
         4)
-            SetServerOptionsPage1NotAllowed
+            ServerName
             ;;
         5)
             SetServerOptionsPage1NotAllowed
@@ -745,6 +745,36 @@ OnlineMode(){
             OnlineMode
             ;;
     esac
+}
+
+ServerName(){
+    clear
+    echo -e ${Green_font_prefix}"请输入想要显示的服务器名称"${Font_color_suffix}
+    read
+    clear
+    CustomizeServerName="$REPLY"
+    echo "您输入的服务器名称是"${CustomizeServerName}
+    echo "是否无误？"
+    echo "1.是"
+    echo "2.否"
+    read -n1
+    case $REPLY in
+        1)
+            grep -n "server-name=" ./server.properties > ./server.properties.tmp
+            sed -i "$(cut -f1 -d":" ./server.properties.tmp)c server-name=${CustomizeServerName}" ./server.properties
+            rm -rf ./server.properties.tmp
+            SetServerOptionsPage1
+            ;;
+        2)
+            ServerName
+            ;;
+        *)
+            clear
+            echo -e ${Red_font_prefix}"选择有误"${Font_color_suffix}
+            sleep 2
+            ServerName
+            ;;
+    esac  
 }
 
 SetPath
