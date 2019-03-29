@@ -77,9 +77,8 @@ ChooseLanguage(){
 ChineseSetPath(){
     clear
     echo "请输入想要安装的/已安装的服务器路径（如 /root/server）"
-    read
+    read ServerPath
     clear
-    ServerPath="$REPLY"
     
     echo "您输入的路径是"${ServerPath}
     echo "是否无误？"
