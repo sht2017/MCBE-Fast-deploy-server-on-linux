@@ -9,9 +9,8 @@ Font_color_suffix="\033[0m"
 SetPath(){
     clear
     echo "请输入已安装的服务器路径（如 /root/server）"
-    read
+    read Path
     clear
-    Path="$REPLY"
 
     echo "您输入的路径是"${Path}
     echo "是否无误？"
@@ -83,6 +82,7 @@ Menu(){
     echo "3.服务器配置"
     echo "4.服务器指令"
     echo "5.更新服务器"
+    echo "6.启动管理面板"
     echo "[回车退出]"
     read -n1
     case $REPLY in
@@ -416,9 +416,8 @@ CommandsInput(){
 CommandsCustomInput(){
     clear
     echo "请输入要注入的指令（如 kill @e）（如果无效则为无法执行，请检查拼写和作用目标）（fill类指令可能会出现在世界外的bug从而导致无解，请作用在可用区块内）"
-    read
+    read CommandInputFinished
     clear
-    CommandInputFinished="$REPLY"
     echo "您输入的指令是"${CommandInputFinished}
     echo "是否无误？"
     echo "1.是"
@@ -750,9 +749,8 @@ OnlineMode(){
 ServerName(){
     clear
     echo -e ${Green_font_prefix}"请输入想要显示的服务器名称"${Font_color_suffix}
-    read
+    read CustomizeServerName
     clear
-    CustomizeServerName="$REPLY"
     echo "您输入的服务器名称是"${CustomizeServerName}
     echo "是否无误？"
     echo "1.是"
