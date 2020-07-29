@@ -54,9 +54,7 @@ ChooseLanguage(){
     case $REPLY in
         1)
             clear
-            echo "如果您的英语水平不错并愿意花费一定时间帮助我加快完成该部分，请联系我"
-            echo "Email:haotianshi566@gmail.com"
-            echo "QQ:1844063767"
+            echo not support
             ;;
         2)
             ChineseInformation
