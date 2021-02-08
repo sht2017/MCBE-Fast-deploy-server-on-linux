@@ -183,6 +183,6 @@ sudo apt-get install wget -y
 |E-mail|1844063767@qq.com
 |QQ|1844063767
 #### 捐献方式
-<img src="https://raw.githubusercontent.com/sht2017/MCBE-Fast-deploy-server-on-linux/master/Donation/PayCode.png" width= "450sp" height ="600sp" div align=center>
+(removed)
 
 ## 特别鸣谢
