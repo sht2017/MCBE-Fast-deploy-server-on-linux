@@ -102,8 +102,6 @@ ChineseSetPath(){
 ChineseInformation(){
     clear
     echo "欢迎使用本脚本"
-    echo "脚本作者:John Stonty"
-    echo "QQ:1844063767"
     sleep 2
     
     ChineseUI
