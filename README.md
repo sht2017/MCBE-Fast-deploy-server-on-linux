@@ -171,7 +171,7 @@ sudo apt-get install wget -y
 
 
 ## 问题反馈
-可以通过QQ或邮箱联系我，Issues不定期查看
+可以通过邮箱联系我，Issues不定期查看
 #
 
 
