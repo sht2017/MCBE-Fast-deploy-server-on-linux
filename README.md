@@ -12,8 +12,6 @@ README
 
 如果该脚本对您有帮助，希望能够通过Star的方式使该项目获得更多关注
 
-当然 若可以通过捐赠的方式使作者获得支持就更好了
-
 ---------------------
 #
 
@@ -180,8 +178,7 @@ sudo apt-get install wget -y
 ## 关于作者
 |Author|John Stonty|
 |---|---
-|E-mail|1844063767@qq.com
-|QQ|1844063767
+|E-mail|temp-github-158zm3kai8f-MCBE-Fast-deploy-server-on-linux@reactordev.org
 #### 捐献方式
 (removed)
 
